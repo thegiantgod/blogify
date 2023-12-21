@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 //const myValidator = require('validator');
 
 const PSEUDO_MIN_LENGTH = 3
-const PASSWORD_MIN_LENGTH = 10
+const PASSWORD_MIN_LENGTH = 8
 
 const UserSchema = new mongoose.Schema({
     "email": {

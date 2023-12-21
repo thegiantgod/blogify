@@ -11,8 +11,12 @@ router.get("/", async function(req, res, next) {
 });
 
 router.get("/:id", async function(req, res) {
-  const user = await UserModel.findById(req.params.id);
-  res.status(200).json(user);
+  try {
+    const user = await UserModel.findById(req.params.id);
+    res.status(200).json(user);
+  } catch(exception) {
+    res.status(404).send("Not found");
+  }
 })
 
 router.post("/", async function(req, res) {
@@ -28,12 +32,16 @@ router.put("/:id", async function(req, res) {
 });
 
 router.delete("/:id", async function(req, res) {
-  let user = await UserModel.findById(req.params.id);
-  if (!user) {
-    res.status(404).send();
+  try{
+    let user = await UserModel.findById(req.params.id);
+    if (!user) {
+      res.status(404).send();
+    }
+    UserModel.deleteOne({ _id: req.params.id })
+    res.status(200).send();
+  } catch(exception) {
+    res.status(500).send("Not found");
   }
-  UserModel.deleteOne({ _id: new mongoose.Types.ObjectId(req.params.id) })
-  res.status(200).send();
 });
 
 module.exports = router;

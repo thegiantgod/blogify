@@ -4,18 +4,27 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const serverless = require("serverless-http");
-const { connectToDatabase } = require("../dbConnection");
-const awsServerlessExpress = require("aws-serverless-express");
+const { connectToDatabase } = require("./dbConnection");
 const passport = require("passport");
+const session = require("express-session");
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 
 
-let app = express();
+var app = express();
 
-let connection = null;
+connectToDatabase();
+
+app.use(session({
+  resave: true,
+  saveUninitialized: false,
+  secret: "MySecretGRSGSEGSGESFGESGSGRDGRDSGRGDRGRGRDRGNGF"
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,9 +35,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -50,13 +56,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports.handler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
+app.listen(8000);
 
-  if (connection === null) connection = await connectToDatabase();
-  const app = require("./app");
-  const server = awsServerlessExpress.createServer(app);
-  return awsServerlessExpress.proxy(server, event, context, "PROMISE").promise;
-};
 
 module.exports.handler = serverless(app);
