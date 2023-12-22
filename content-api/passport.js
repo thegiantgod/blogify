@@ -1,6 +1,6 @@
 const passport = require("passport");
-const { UserModel } = require("./models/userModel");
-const LocalStrategy = require("passport-local");
+const UserModel = require("./models/User");
+const LocalStrategy = require("passport-local").Strategy;
  
 passport.use(
   new LocalStrategy(
@@ -9,14 +9,10 @@ passport.use(
       passwordField: "password",
     },
     async function (username, password, done) {
-      console.log(username, password);
       const user = await UserModel.findOne({ email: username, password });
-      console.log("User", user?.email);
       if (!user) {
-        console.log("Here !");
         return done(null, false, { message: "Login is not valid." });
       }
-      console.log("No ! Here !");
       return done(null, user);
     }
   )

@@ -162,7 +162,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/blogify-content-api/dev/1703164604741-2023-12-21T13:16:44.741Z/blogify-content-api.zip"
+          "S3Key": "serverless/blogify-content-api/dev/1703198633897-2023-12-21T22:43:53.897Z/blogify-content-api.zip"
         },
         "Handler": "app.handler",
         "Runtime": "nodejs16.x",
@@ -180,14 +180,14 @@
         "AppLogGroup"
       ]
     },
-    "AppLambdaVersionot9ViefWHfkVbKkDIlj4qIBwhs6UiWx8zbEC2AG4jk": {
+    "AppLambdaVersionoFDEA9SQQaANRvQXspcKqzLd8vJo4i6Wfk6FQv3ygPk": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "AppLambdaFunction"
         },
-        "CodeSha256": "L3sQ6qnOW9SmMht9bx0n64OwR06iFkjs6raLBGrg7vQ="
+        "CodeSha256": "ye2QIdEJQ1YqbOtvH6HYr1X3CP6mu9RvXADM099ch9Q="
       }
     },
     "ApiGatewayRestApi": {
@@ -312,7 +312,7 @@
         "AppLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1703164576513": {
+    "ApiGatewayDeployment1703198627579": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -375,7 +375,7 @@
     "AppLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "AppLambdaVersionot9ViefWHfkVbKkDIlj4qIBwhs6UiWx8zbEC2AG4jk"
+        "Ref": "AppLambdaVersionoFDEA9SQQaANRvQXspcKqzLd8vJo4i6Wfk6FQv3ygPk"
       },
       "Export": {
         "Name": "sls-blogify-content-api-dev-AppLambdaFunctionQualifiedArn"
